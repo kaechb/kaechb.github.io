@@ -4,57 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benno Kaech - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Raleway', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             color: #333;
         }
         header {
-            background-color: #333;
+            background-color: #4a90e2;
             color: #fff;
-            padding: 20px;
+            padding: 60px 20px;
             text-align: center;
         }
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 3em;
+            font-weight: 700;
         }
         header p {
-            margin: 5px 0 0;
-            font-size: 1.2em;
+            margin: 10px 0 0;
+            font-size: 1.5em;
+            font-weight: 400;
         }
         nav {
-            background-color: #444;
-            overflow: hidden;
+            background-color: #333;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
         }
         nav a {
             color: white;
             padding: 14px 20px;
             text-decoration: none;
             display: inline-block;
+            font-weight: 700;
+            transition: background 0.3s ease;
         }
         nav a:hover {
             background-color: #575757;
         }
         section {
-            padding: 20px;
-            margin: 20px;
+            padding: 60px 20px;
+            margin: 20px auto;
+            max-width: 800px;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         section h2 {
             margin-top: 0;
+            font-size: 2em;
+            color: #4a90e2;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul li {
+            margin-bottom: 15px;
+        }
+        ul li strong {
+            color: #4a90e2;
         }
         footer {
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
-            margin-top: 20px;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        .contact-info {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -62,40 +90,57 @@
 
 <header>
     <h1>Benno Kaech</h1>
-    <p>Software Engineer | Full Stack Developer</p>
+    <p>Machine Learning Engineer | Data Scientist</p>
 </header>
 
 <nav>
-    <a href="#about">About</a>
     <a href="#cv">Curriculum Vitae</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
 </nav>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I'm Benno Kaech, a passionate software engineer specializing in full stack development. I have experience working with various technologies including Vue.js, ASP.NET Core, Flutter, and more. I love creating efficient and scalable software solutions.</p>
-</section>
-
 <section id="cv">
     <h2>Curriculum Vitae</h2>
-    <p>You can view and download my CV <a href="cv.pdf" target="_blank">here</a>.</p>
+
+    <h3>Skills and Strengths</h3>
+    <ul>
+        <li><strong>Progress-Oriented:</strong> Proven track record of working independently and efficiently, always aiming for progress and innovation in challenging research environments.</li>
+        <li><strong>Collaborative:</strong> Effective in both leadership and collaborative roles, contributing to team success through clear communication and a commitment to shared goals.</li>
+        <li><strong>Adaptable:</strong> Quick to adapt to new environments and challenges, especially evident in transitioning from academia to the dynamic setting of a startup and back to academia for the pursuit of a PhD.</li>
+    </ul>
+    <h3>Education</h3>
+    <ul>
+        <li><strong>Deutsches Elektronen-Synchrotron (DESY)</strong><br>Ph.D. in Particle Physics - Magna Cum Laude, 2021–2024</li>
+        <li><strong>ETH Zurich</strong><br>M.Sc. in Physics, 2019–2020</li>
+        <li><strong>ETH Zurich</strong><br>B.Sc. in Physics, 2015–2018</li>
+    </ul>
+    <h3>Selected Scientific Record</h3>
+    <ul>
+        <li><strong>NeurIPS 2022, ML4PS:</strong> <a href=https://arxiv.org/abs/2211.1362 target=_"blank"> Point Cloud Generation using Transformer Encoders and Normalizing Flows</a></li>
+
+        <li><strong>NeurIPS 2023, ML4PS:</strong> <a href=https://arxiv.org/abs/2408.04997 target=_"blank"> Pay Attention to Mean-Fields for Point Cloud Generation</a></li>
+        <li><strong>PhD Thesis:</strong> <a href=https://bib-pubdb1.desy.de/record/611772 target=_"blank">Generative Modelling in High-energy Physics</a></li>
+    </ul>
+    <h3>Experience</h3>
+    <ul>
+        <li><strong>Simpego, Zurich, Switzerland</strong><br>Data Analyst/Working Student, 2017–2020<br>I had the opportunity to contribute significantly to a car insurance startup by designing machine learning-based pricing models that enhanced pricing accuracy and efficiency. I also played a key role in automating static processes, streamlining operations, and boosting productivity. Additionally, my work involved web scraping and migrating the company’s backend to AWS, further supporting the startup's innovative technological advancements.</li>
+        <li><strong>ETH Zurich, Institute for Machine Tools and Manufacturing, Switzerland</strong><br>Research Assistant, 2020–2021<br>Focused on innovative research and development, introducing machine learning-based solutions to manufacturing technologies.</li>
+    </ul>
 </section>
 
 <section id="projects">
     <h2>Projects</h2>
     <ul>
-        <li><a href="https://github.com/stag7824/project1" target="_blank">Project 1</a> - A brief description of what this project does.</li>
-        <li><a href="https://github.com/stag7824/project2" target="_blank">Project 2</a> - A brief description of what this project does.</li>
-        <li><a href="https://github.com/stag7824/project3" target="_blank">Project 3</a> - A brief description of what this project does.</li>
+        <li><strong>Project 1:</strong> <a href="https://github.com/kaechb/gen_model_playground" target="_blank">Gen Model Playground</a> - a versatile template repository for experimenting with generative models like GANs, VAEs, and Normalizing Flows and comparing them on low dimensional. It's designed for both educational purposes and quick prototyping, offering customizable structures and easy integration with Weights & Biases for logging and visualization.</li>
+        <li><strong>Project 2:</strong> <a href="https://github.com/kaechb/MDMA/tree/Thesis" target="_blank">Thesis</a> - Since reproducibility is often overlooked in science, I created a single repository that contains all the models I used in my thesis. This makes it easier to replicate the results I achieved while working on generative modeling in high-energy particle physics.</li>
+        <li><strong>Project 3:</strong> <a href="https://caloutils.readthedocs.io/en/latest/" target="_blank">Caloutils</a> - The caloutils package provides a collection of tools for analyzing and processing calorimeter data in high-energy physics. It includes utilities for data handling, calibration, visualization, and various corrections specific to calorimeter systems. The package is designed to streamline workflows and improve the accuracy of calorimeter-related analyses, making it easier for researchers to work with complex datasets and extract meaningful insights..</li>
     </ul>
 </section>
 
 <section id="contact">
-    <h2>Contact Me</h2>
-    <p>You can reach me at <a href="mailto:t.ahmed.18027@khi.iba.edu.pk">t.ahmed.18027@khi.iba.edu.pk</a>.</p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/SyedTalhaAhmedGardazi/" target="_blank">Benno Kaech</a></p>
-    <p>GitHub: <a href="https://github.com/stag7824" target="_blank">stag7824</a></p>
+    <h2>Contact</h2>
+    <p>If you would like to get in touch, feel free to reach out to me via email:</p>
+    <p>Email: <a href="mailto:benno.kaech@icloud.com">benno.kaech@icloud.com</a></p>
 </section>
 
 <footer>
