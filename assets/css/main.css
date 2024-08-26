@@ -8780,3 +8780,47 @@ body {
     transform: scale(1.2); /* Slightly enlarge icons on hover */
     cursor: pointer; /* Change cursor to pointer to indicate interactivity */
 }
+
+.banner-container {
+    display: flex; /* Create a flex container for the two columns */
+    align-items: center; /* Center content vertically within the banner */
+    justify-content: space-between; /* Distribute space between the two columns */
+    padding: 20px; /* Add padding around the container */
+    min-height: 100vh; /* Make the banner full height */
+    background-color: white; /* Optional background color */
+	scroll-snap-align: start;
+}
+
+.banner-content {
+	width: 40%; /* Take up half of the container's width */
+	display: block;
+    padding: 20px; /* Add padding around the content */
+}
+
+.banner-image {
+    flex: 0 0 60%; /* Take up 60% of the container's width */
+    display: flex; /* Center the image within the container */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    position: relative; /* Position relative for absolute positioning inside */
+    overflow: hidden; /* Hide any overflow from the image */
+}
+
+.profile-image {
+    height: 100vh; /* Scale the image to fill the full height of the viewport */
+    width: auto; /* Maintain the aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container */
+    opacity: 0.5; /* Set image opacity */
+	transform: translateX(20%);
+}
+
+.icons {
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Display icons in a row */
+    gap: 15px; /* Add space between icons */
+}
+
+.icons li {
+    display: inline; /* Align icons horizontally */
+}
