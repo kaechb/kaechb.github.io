@@ -1455,3 +1455,56 @@ body {
 	}
 }
 
+/* Title Container */
+.title-container {
+    position: relative; /* Ensure relative positioning for absolute child elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: white; /* Optional background color */
+    scroll-snap-align: start;
+}
+
+/* Scroll Indicator Styles */
+.scroll-indicator {
+    position: absolute; /* Position it at the bottom of the container */
+    bottom: 40px; /* Move up a bit from the bottom */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    display: flex; /* Flexbox to align arrows in a column */
+    flex-direction: column; /* Stack arrows vertically */
+    align-items: center; /* Center items vertically */
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+}
+
+.scroll-indicator .arrow {
+    display: block; /* Make it a block element */
+    width: 24px; /* Width of the arrow */
+    height: 24px; /* Height of the arrow */
+    border-bottom: 3px solid black; /* Black arrow */
+    border-right: 3px solid black; /* Black arrow */
+    transform: rotate(45deg); /* Rotate to create an arrow shape */
+    margin-bottom: -10px; /* Space between the two arrows */
+    animation: bounce 2s infinite; /* Apply bounce animation */
+    box-shadow: 2px 2px 5px white; /* Add white shadow */
+}
+
+.scroll-indicator .arrow-above {
+    animation-delay: 0.s; /* Slight delay for the second arrow */
+    opacity: 0.8; /* Slightly faded for a layered effect */
+}
+
+/* Keyframes for the bounce animation */
+@keyframes bounce {
+    0%,  60%,  100% {
+        transform: translateY(0) rotate(45deg); /* Start at the original position */
+    }
+    30% {
+        transform: translateY(10px) rotate(45deg); /* Move down */
+    }
+    80% {
+        transform: translateY(5px) rotate(45deg); /* Move up slightly */
+    }
+}
