@@ -1157,7 +1157,7 @@ body {
 	scroll-snap-align: start;
 	height: 100vh;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1170px) {
 	.project-container {
 		height: auto; /* Adjust padding for smaller screens */
 	}
@@ -1360,7 +1360,7 @@ body {
 	transition: opacity 0.5s ease; /* Smooth transition for opacity change */
 	filter: grayscale(100%);
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1170px) {
 	.project-items {
         flex-direction: column; /* Stack items vertically on small screens */
         gap: 15px; /* Reduce gap between project items */
