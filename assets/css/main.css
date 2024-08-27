@@ -1434,6 +1434,10 @@ body {
 		cursor: pointer; /* Change cursor to pointer to indicate interactivity */
 		filter: grayscale(0%); /* Remove grayscale on hover */
 	}
+
+	.last {
+		margin-bottom: 200px;
+	}
 }
 
 /* Title Container */
