@@ -1300,46 +1300,37 @@ body {
     border-color: grey;             /* Darker grey on hover */
 }
 
+
 .title-container {
-    display: flex; /* Create a flex container for the two columns */
-    align-items: center; /* Center content vertically within the banner */
-    justify-content: space-between; /* Distribute space between the two columns */
-    padding: 0px; /* Add padding around the container */
-    max-height: 90vh; /* Make the banner full height */
+    position: relative; /* Ensure relative positioning for absolute child elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    min-height: 100vh;
     background-color: white; /* Optional background color */
-	scroll-snap-align: start;
+    scroll-snap-align: start;
 	box-sizing: border-box;
 }
 
-
 .title-content {
-	width: 60%; /* Take up half of the container's width */
     padding: 20px; /* Add padding around the content */
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	display: flex;
-	height: 100vh;
+	position: relative; /* Ensure content is positioned above the pseudo-element */
+	padding: 20px;
+	z-index: 2; /* Ensure content is above background */
+	width: 100%;
+	max-height: 90vh;
 }
 .title-content-wide {
 	width: 60%; /* Take up half of the container's width */
 	display: block;
     padding: 20px; /* Add padding around the content */
 }
-.title-image {
-    flex: 0 0 60%; /* Take up 60% of the container's width */
-    display: flex; /* Center the image within the container */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    position: relative; /* Position relative for absolute positioning inside */
-    overflow: hidden; /* Hide any overflow from the image */
-}
-.title-container {
-	flex-direction: column;
-	position: relative; /* Ensure relative positioning for pseudo-element */
-	min-height: 100vh; /* Ensure container takes up the full viewport height */
-	overflow: hidden; /* Prevent overflow */
-}
+
 .title-container::before {
 	content: '';
 	position: absolute;
@@ -1356,13 +1347,8 @@ body {
 	transition: opacity 0.5s ease; /* Smooth transition for opacity change */
 	filter: grayscale(100%);
 }
-.title-content {
-	padding: 20px;
-	z-index: 2; /* Ensure content is above background */
-	position: relative; /* Ensure content is positioned above the pseudo-element */
-	width: 100%;
 
-}
+
 
 .title-image {
 	display: none; /* Hide the image element on mobile */
@@ -1456,16 +1442,6 @@ body {
 }
 
 /* Title Container */
-.title-container {
-    position: relative; /* Ensure relative positioning for absolute child elements */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    min-height: 100vh;
-    background-color: white; /* Optional background color */
-    scroll-snap-align: start;
-}
 
 /* Scroll Indicator Styles */
 .scroll-indicator {
