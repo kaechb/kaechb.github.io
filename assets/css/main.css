@@ -121,7 +121,7 @@ input, select, textarea {
 		@media screen and (max-width: 1680px) {
 
 			html {
-				font-size: 14pt;
+				font-size: 18pt;
 			}
 
 		}
@@ -1291,7 +1291,7 @@ body {
     border-radius: 50%;             /* Creates a circle */
     border: 2px solid lightgrey;    /* Light grey border */
     color: black;                   /* Icon color */
-    font-size: 18px;                /* Icon size */
+    font-size: 1rem;                /* Icon size */
     margin: 5px;                    /* Adds spacing around each icon */
     transition: border-color 0.3s;  /* Smooth transition for hover effect */
 }
