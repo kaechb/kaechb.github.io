@@ -1360,6 +1360,17 @@ body {
 	transition: opacity 0.5s ease; /* Smooth transition for opacity change */
 	filter: grayscale(100%);
 }
+.title-content {
+	padding: 20px;
+	z-index: 2; /* Ensure content is above background */
+	position: relative; /* Ensure content is positioned above the pseudo-element */
+	width: 100%;
+
+}
+
+.title-image {
+	display: none; /* Hide the image element on mobile */
+}
 @media screen and (max-width: 1170px) {
 	.project-items {
         flex-direction: column; /* Stack items vertically on small screens */
@@ -1396,17 +1407,7 @@ body {
     /* Pseudo-element for background image with opacity */
 
 
-    .title-content {
-        padding: 20px;
-        z-index: 2; /* Ensure content is above background */
-        position: relative; /* Ensure content is positioned above the pseudo-element */
-        width: 100%;
 
-    }
-
-    .title-image {
-        display: none; /* Hide the image element on mobile */
-    }
 	 .logocontainer {
         flex: 1 1 100%; /* Make each element take full width on smaller screens */
         max-width: 100%; /* Ensure elements do not overflow */
