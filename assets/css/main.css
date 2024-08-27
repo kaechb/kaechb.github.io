@@ -1305,10 +1305,11 @@ body {
     display: flex; /* Create a flex container for the two columns */
     align-items: center; /* Center content vertically within the banner */
     justify-content: space-between; /* Distribute space between the two columns */
-    padding: 20px; /* Add padding around the container */
-    min-height: 100vh; /* Make the banner full height */
+    padding: 0px; /* Add padding around the container */
+    max-height: 90vh; /* Make the banner full height */
     background-color: white; /* Optional background color */
 	scroll-snap-align: start;
+	box-sizing: border-box;
 }
 
 
