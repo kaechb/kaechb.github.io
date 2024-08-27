@@ -1157,12 +1157,8 @@ body {
 	scroll-snap-align: start;
 	height: 100vh;
 }
-@media screen and (max-width: 1170px) {
-	.project-container {
-		height: auto; /* Adjust padding for smaller screens */
-	}
 
-}
+
 .project-title {
     text-align: center; /* Center text horizontally */
     margin-bottom: 20px; /* Adds some space below the title */
@@ -1371,7 +1367,7 @@ body {
 .title-image {
 	display: none; /* Hide the image element on mobile */
 }
-@media screen and (max-width: 1170px) {
+@media screen and (max-width: 812px) {
 	.project-items {
         flex-direction: column; /* Stack items vertically on small screens */
         gap: 15px; /* Reduce gap between project items */
@@ -1402,7 +1398,9 @@ body {
         scroll-snap-align: none; /* Disable scroll snapping on mobile devices */
 		scroll-snap-type: none;
     }
-
+	.project-container {
+		height: auto; /* Adjust padding for smaller screens */
+	}
 
     /* Pseudo-element for background image with opacity */
 
@@ -1426,6 +1424,7 @@ body {
 		box-sizing: border-box; /* Include padding and border in element's total width */
 		height: auto;
 		min-height: auto;
+		border: none; /* Optional border for the container */
 
 	}
 	.logos
@@ -1436,10 +1435,12 @@ body {
 	.tabs-banner{
 		border-bottom: 0px solid #ddd; /* Optional bottom border for a banner effect */
 		height: auto;
+		border: none
 
 	}
 	.content {
 		height: auto;
+		border: none;
 	}
 	.logocontainer {
 		height: auto;
