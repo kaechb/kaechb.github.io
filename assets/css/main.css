@@ -1377,6 +1377,7 @@ body {
 	.title-container, .logocontainer, .container, .project-container, .wrapper  {
         scroll-snap-align: none; /* Disable scroll snapping on mobile devices */
 		scroll-snap-type: none;
+		max-height: 80vh;
     }
 	.project-container {
 		height: auto; /* Adjust padding for smaller screens */
