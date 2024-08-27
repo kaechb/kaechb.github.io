@@ -12,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 	</head>
 	<body >
@@ -25,9 +25,30 @@
 						<h1>Dr. Benno Käch</h1>
 						<p class="major">Data Scientist | Machine Learning Engineer <br> PhD in High-Energy Particle Physics</p>
 						<ul class="icons">
-							<li><a href="https://www.linkedin.com/in/benno-k%C3%A4ch-a5a8ab143/" target="_blank" class="icon brands style2 fa-linkedin-in"><span class="label"></span></a></li>
-							<li><a href="#" class="icon style2 fa-envelope" onclick="document.getElementById('emailForm').style.display='block'"><span class="label">Email</span></a></li>
+							<!-- LinkedIn Icon -->
+							<li>
+								<a href="https://www.linkedin.com/in/benno-k%C3%A4ch-a5a8ab143/" target="_blank" class="icon icon-circle-outline">
+									<i class="fa-brands fa-linkedin"></i>
+								</a>
+							</li>
+
+							<!-- Email Icon -->
+							<li>
+								<a href="#" class="icon icon-circle-outline" onclick="document.getElementById('emailForm').style.display='block'">
+									<i class="fas fa-envelope"></i>
+									<span class="label">Email</span>
+								</a>
+							</li>
+
+							<!-- CV Download Icon -->
+							<li>
+								<a href="files/Benno_Kaech_CV.pdf" class="icon-circle-outline" download>
+									<i class="fas fa-download"></i>
+									<span class="label"></span>
+								</a>
+							</li>
 						</ul>
+
 
 							<div id="emailForm" style="display:none; padding: 20px;">
 								<form action="https://formspree.io/f/xyzgbjlv" method="POST">
@@ -198,9 +219,7 @@
 						</ul>
 					</div>
 					<div class="banner-content logos" >
-
 						<img src="images/UHH_Universitat_Hamburg_Logo.svg" alt="" />
-
 						<img src="images/eth.svg" alt="" />
 
 					</div></div>

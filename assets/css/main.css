@@ -8224,11 +8224,15 @@ scroll-snap-align: start;
 .icon-gallery img {
     width: 100%; /* Full width to fit the container */
     transition: transform 0.3s ease-in-out; /* Smooth transform effect for interactions */
+    filter: grayscale(100%); /* Make the logos grayscale by default */
+
+
 }
 
 /* Hover effect for icons */
 .icon-gallery img:hover {
     transform: scale(1.1); /* Slightly enlarge icons on hover */
+	filter: grayscale(0%); /* Make the logos grayscale by default */
     cursor: pointer; /* Change cursor to pointer to indicate interactivity */
 }
 
@@ -8240,6 +8244,7 @@ scroll-snap-align: start;
     align-items: center;
     justify-content: center;
     gap: 10%;
+
     height: 10%;
 }
 .logos img {
@@ -8323,6 +8328,7 @@ body {
 	object-fit: contain; /* Ensure the image fits within the box without distortion */
 	display: block; /* Removes inline spacing in certain scenarios */
 	margin: auto; /* Centers the image horizontally */
+	filter: grayscale(100%); /* Make the logos grayscale by default */
 }
 
 .tabs .tab-content {
@@ -8360,9 +8366,12 @@ body {
 .tabs img:hover {
     transform: scale(1.2); /* Slightly enlarge icons on hover */
     cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+	filter: grayscale(0%); /* Make the logos grayscale by default */
 }
 
-
+.tabs input[type="radio"]:checked + label img {
+    filter: grayscale(0%); /* Keep the checked tab logo in color */
+}
 .project-container {
     display: flex; /* Enables Flexbox */
 	flex-direction: column;
@@ -8414,7 +8423,14 @@ body {
     max-height: 50%; /* Control logo height */
     object-fit: contain; /* Fit the image inside the container without distortion */
     display: flex; /* Block display for the image */
+	filter: grayscale(100%);
 }
+.project  img:hover {
+    transform: scale(1.2); /* Slightly enlarge icons on hover */
+    cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+	filter: grayscale(0%); /* Make the logos grayscale by default */
+}
+
 
 .project-content {
     flex-grow: 1; /* Allows content to grow and fill the remaining space */
@@ -8490,4 +8506,22 @@ body {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+}
+
+.icon-circle-outline {
+    display: inline-block;          /* Ensure the element stays inline but behaves like a block for padding */
+    width: 40px;                    /* Width of the circle */
+    height: 40px;                   /* Height of the circle */
+    line-height: 40px;              /* Aligns the icon vertically in the middle */
+    text-align: center;             /* Aligns the icon horizontally in the middle */
+    border-radius: 50%;             /* Creates a circle */
+    border: 2px solid lightgrey;    /* Light grey border */
+    color: black;                   /* Icon color */
+    font-size: 18px;                /* Icon size */
+    margin: 5px;                    /* Adds spacing around each icon */
+    transition: border-color 0.3s;  /* Smooth transition for hover effect */
+}
+
+.icon-circle-outline:hover {
+    border-color: grey;             /* Darker grey on hover */
 }
