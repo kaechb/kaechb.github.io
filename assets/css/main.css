@@ -1013,7 +1013,7 @@ html {
 }
 .logos img {
     flex: 0 0 40px;  /* flex-grow, flex-shrink, flex-basis */
-    max-width: 30%;  /* makes sure the image does not overflow its container */
+    max-width: 50%;  /* makes sure the image does not overflow its container */
 	flex-shrink: 1;
 }
 
