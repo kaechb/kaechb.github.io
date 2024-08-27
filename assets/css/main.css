@@ -1435,9 +1435,7 @@ body {
 		filter: grayscale(0%); /* Remove grayscale on hover */
 	}
 
-	.last {
-		margin-bottom: 200px;
-	}
+
 }
 
 /* Title Container */
