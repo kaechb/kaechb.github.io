@@ -115,7 +115,7 @@ input, select, textarea {
 /* Type */
 
 	html {
-		font-size: 18pt;
+		font-size: 12pt;
 	}
 
 
@@ -123,7 +123,7 @@ input, select, textarea {
 		@media screen and (max-width: 1280px) {
 
 			html {
-				font-size: 16pt;
+				font-size: 12pt;
 			}
 
 		}
@@ -982,6 +982,7 @@ html {
     padding: 10px; /* Padding around the gallery */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0); /* Subtle shadow for depth */
+	max-width: 40ch;
 
 }
 
@@ -1034,17 +1035,6 @@ body {
 	background-color: #f8fafc;
 }
 
-.container {
-	padding: 0rem;
-	scroll-snap-align: start;
-	min-height: 100vh;
-	min-height: 100dvh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-
-}
 
 /* Hide all content sections by default */
 /* Initially hide all content sections */
@@ -1053,14 +1043,27 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	margin: 2rem auto;
-	max-width: 100ch;
-	align-items: flex; /* Align items at the top */
+	max-width: 100%;
+	justify-content: space-around; /* Space around the items */
+}
+.tab-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px; /* Space between the year and the image */
+}
 
+.tab-years {
+    font-size: 1.2rem; /* Adjust font size as needed */
+    font-weight: 1; /* Bold for emphasis */
+    margin-bottom: 10px; /* Adds space below the years */
 }
 
 .tabs label {
     cursor: pointer;
-    display: flex; /* Use flex to align content inside the label */
+    display: flex;
+    flex-direction: column; /* Stack year and image vertically */
     align-items: center; /* Align content vertically in the center */
     justify-content: center; /* Center content horizontally */
     font-weight: 600;
@@ -1068,44 +1071,49 @@ body {
     padding: 2rem; /* Adjust padding to control space around content */
     transition: background ease 0.3s;
     width: 100%;
-    max-width: 30%; /* Ensure label takes only a small width if necessary */
+    max-width: 30%; /* Set maximum width to ensure responsiveness */
     text-align: center; /* Center text inside label */
-
     position: relative; /* To position elements inside the label correctly */
-    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
-
-    overflow: hidden; /* Hide any overflow from the content */
+        overflow: hidden; /* Hide any overflow from the content */
 }
 
 .tabs-banner {
     display: flex;
     flex-wrap: wrap;
-    background-color: white; /* Light background color for the banner */
-	padding: 2rem; /* Adds some space around the banner content */
+	justify-content: center;
+	padding: 0rem; /* Adds some space around the banner content */
     margin-bottom: 2rem; /* Adds some space below the banner */
     width: 100%; /* Ensures the banner spans the full width */
 	height: 80vh;
 	height: 80dvh;
 	box-sizing: border-box; /* Includes padding in the total width/height */
-    background-color: white; /* Optional background color for each project */
-    border: 1px solid #ddd; /* Optional border for each project */
     border-radius: 5px; /* Optional rounded corners */
 }
 .tabs img {
 	max-width: 100%;
 	max-height: 100%;
 	object-fit: contain; /* Ensure the image fits within the box without distortion */
-	display: block; /* Removes inline spacing in certain scenarios */
-	margin: auto; /* Centers the image horizontally */
-	filter: grayscale(100%); /* Make the logos grayscale by default */
+
+	filter: grayscale(100%); /* Make the logos grayscale by
+	position: absolute; /* Position the image absolutely within the image-box */
+
 }
 
 .tabs .tab-content {
 	display: none;
 	flex-grow: 1;
-	padding: 0rem;
+	padding: 2rem;
 	width: 100%;
 	align-self: flex-start;
+	background-color: white; /* Optional background color for each project */
+	border: 1px solid #ddd; /* Optional border for each project */
+	border-radius: 5px; /* Optional rounded corners */
+	box-sizing: border-box; /* Includes padding in the total width/height */
+	border: 1px solid #ddd; /* Optional border for each project */
+	border-radius: 5px; /* Optional rounded corners */
+	background-color: white; /* Optional background color for each project */
+	display: none; /* Hide all content by default */
+	text-align: left; /* Align text to the left for readability */
 }
 
 
@@ -1117,19 +1125,41 @@ body {
 .tabs input[type="radio"]:checked + label + .tab-content {
 	display: block;
 }
+.tab-content {
+    display: none; /* Hide all content by default */
+    text-align: left; /* Align text to the left for readability */
+    padding: 10px; /* Adds padding around the content */
+	margin: 50px;
 
 
-@media (min-width: 10em) {
-	.tabs .tab-content {
-		order: 99;
-	}
+}
 
-	.tabs label {
-		order: 1;
-		margin-right: 0.2rem;
-		margin-top: 0;
-		width: auto;
-	}
+
+.tabs .tab-content {
+	order: 99;
+}
+
+.tabs label {
+	order: 1;
+	margin-right: 0.2rem;
+	margin-top: 0;
+	width: auto;
+}
+
+.image-box {
+    width: 100%; /* Full width of the parent */
+    aspect-ratio: 1 / 1; /* Ensure a square container */
+    position: relative; /* Position relative to hold absolutely positioned children */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	max-height: 20vh;
+}
+
+.image-box img {
+    max-width: 100%; /* Image will not exceed the box width */
+    max-height: 100%; /* Image will not exceed the box height */
+    object-fit: contain; /* Ensure the image fits within the box without distortion */
 }
 
 .tabs img:hover {
@@ -1151,14 +1181,15 @@ body {
     padding: 20px; /* Optional padding for spacing within the container */
     box-sizing: border-box; /* Ensures padding is included in the total width */
 	scroll-snap-align: start;
-	height: 100vh;
-	height: 100dvh;
+	height: auto;
+	height: auto;
 }
 
 
 .project-title {
     text-align: center; /* Center text horizontally */
     margin-bottom: 20px; /* Adds some space below the title */
+	width: 100%;
 
 }
 
@@ -1169,7 +1200,8 @@ body {
 	justify-content: center; /* Centers content vertically */
     width: 100%; /* Full width for project items container */
     gap: 20px; /* Space between project items */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-wrap: wrap; /* Allow wrapping on smaller */
+
 }
 
 .project {
@@ -1179,14 +1211,16 @@ body {
     align-items: center; /* Centers logo and content horizontally */
     justify-content: center; /* Centers content vertically */
     text-align: center; /* Centers the text inside the content block */
-    height: 60dvh;
-	height: 60vh; /* Fixed height for each project box */
-
+	min-height: 45dvh;
+	min-height: 45vh; /* Fixed height for each project box */
+	height: auto;
     padding: 20px; /* Optional padding around each project */
     box-sizing: border-box; /* Includes padding in the total width/height */
-    background-color: white; /* Optional background color for each project */
     border: 1px solid #ddd; /* Optional border for each project */
     border-radius: 5px; /* Optional rounded corners */
+    background-color: white; /* Optional background color for each project */
+
+
 }
 
 .project a {
@@ -1195,14 +1229,14 @@ body {
     justify-content: center; /* Align content in the center horizontally */
     width: 100%; /* Full width for the link */
     text-decoration: none; /* Remove default underline for links */
+
 }
 
 .project-logo {
-    max-width: 100%; /* Ensure logo fits the container width */
-    max-height: 50%; /* Control logo height */
-    object-fit: contain; /* Fit the image inside the container without distortion */
+    max-width: 40%;
     display: flex; /* Block display for the image */
 	filter: grayscale(100%); /* Grayscale by default */
+
 }
 
 .project-content {
@@ -1213,6 +1247,7 @@ body {
     justify-content: center; /* Centers content horizontally */
     text-align: center; /* Centers the text inside the content block */
 	width: 100%;
+
 }
 
 .project img:hover {
@@ -1226,31 +1261,76 @@ body {
 
 
 .content {
-	width: 100%; /* Take up half of the container's width */
     padding: 20px; /* Add padding around the content */
 	margin-left: 20px;
 	justify-content: center;
 	flex-direction: column;
-	display: flex;
 	max-height: 100vh;
 	max-height: 100dvh;
 	background-color: white; /* Optional background color for each project */
     border: 1px solid #ddd; /* Optional border for each project */
     border-radius: 5px; /* Optional rounded corners */
+}
+
+/* Main container */
+.container {
+    padding: 0rem;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column; /* Default to column layout */
+    justify-content: space-between; /* Space between items */
+    width: 100%; /* Full width for flex container */
+    align-items: center; /* Center items horizontally */
+    gap: 20px; /* Add gap between items */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Flex container for left and right items */
+.flex-container {
+    display: flex; /* Enables Flexbox for the container */
+    align-items: flex-start; /* Aligns items to the top */
+    justify-content: space-between; /* Space between left and right items */
+    width: 100%; /* Full width for flex container */
+    gap: 20px; /* Adds gap between left and right items */
+    box-sizing: border-box; /* Includes padding and border in width calculations */
+    flex-wrap: nowrap; /* Prevents wrapping on larger screens */
 
 }
-.logocontent {
-	width: 100%; /* Take up half of the container's width */
-    padding: 0px; /* Add padding around the content */
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	display: flex;
-	max-height: 100vh;
-	max-height: 100dvh;
 
-	max-width: 30%;
+/* Styles for left item */
+.left-item {
+    flex: 1 1 70%; /* Flex-grow: 1, Flex-shrink: 1, Flex-basis: 70% */
+    padding: 20px;
+    border-radius: 5px; /* Optional rounded corners */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    display: flex; /* Enable flexbox for child elements */
+    flex-direction: column; /* Stack content vertically inside the item */
+    align-items: flex-start; /* Align content to the top */
 
+
+}
+
+/* Styles for right item */
+.right-item {
+    flex: 1 1 35%; /* Flex-grow: 1, Flex-shrink: 1, Flex-basis: 25% */
+    padding: 20px;
+    border-radius: 5px; /* Optional rounded corners */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    display: flex; /* Enable flexbox for child elements */
+    flex-direction: column; /* Stack content vertically inside the item */
+    align-items: flex-start; /* Align content to the top */
+}
+
+/* Styles for the third item */
+.third-item {
+    width: 100%; /* Full width of the container */
+    padding: 20px;
+
+	padding-bottom: 200px;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    display: flex; /* Enable flexbox for child elements */
+    flex-direction: column; /* Stack content vertically inside the item */
+    align-items: flex-start; /* Align content to the top */
 }
 
 .profile-image {
@@ -1272,38 +1352,20 @@ body {
 .icons li {
     display: inline; /* Align icons horizontally */
 }
-.logocontainer {
-	padding: 2rem;
-	scroll-snap-align: start;
-	min-height: auto;
-	display: flex;
-	max-width: 40%;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	gap: 20px; /* Add space between elements */
-	max-height: 40%;
 
+
+.container.last {
+    padding: 0rem;
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Stack items vertically within the container */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Space between content and logos */
+    width: 100%; /* Full width for flex container */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    gap: 20px; /* Adds a gap between content blocks */
 }
-
-.icon-circle-outline {
-    display: inline-block;          /* Ensure the element stays inline but behaves like a block for padding */
-    width: 40px;                    /* Width of the circle */
-    height: 40px;                   /* Height of the circle */
-    line-height: 40px;              /* Aligns the icon vertically in the middle */
-    text-align: center;             /* Aligns the icon horizontally in the middle */
-    border-radius: 50%;             /* Creates a circle */
-    border: 2px solid lightgrey;    /* Light grey border */
-    color: black;                   /* Icon color */
-    font-size: 1rem;                /* Icon size */
-    margin: 5px;                    /* Adds spacing around each icon */
-    transition: border-color 0.3s;  /* Smooth transition for hover effect */
-}
-
-.icon-circle-outline:hover {
-    border-color: grey;             /* Darker grey on hover */
-}
-
 
 .title-container {
     position: relative; /* Ensure relative positioning for absolute child elements */
@@ -1355,105 +1417,24 @@ body {
 
 
 
-.title-image {
-	display: none; /* Hide the image element on mobile */
-}
-@media screen and (max-width: 812px) {
-	.project-items {
-        flex-direction: column; /* Stack items vertically on small screens */
-        gap: 15px; /* Reduce gap between project items */
-    }
 
-    .project {
-        width: 100%; /* Full width for each project on small screens */
-        height: auto; /* Let the height adjust automatically */
-        margin-bottom: 20px; /* Optional: spacing between stacked items */
-        padding: 15px; /* Reduced padding to minimize extra space */
-    }
-
-    .project-logo {
-        margin-bottom: 5px; /* Further reduced space below the logo */
-    }
-
-    .project-content {
-        padding: 0; /* Remove padding to minimize extra space */
-        margin-top: 5px; /* Minimal margin to separate the content from the image */
-    }
-	 .logocontainer .container {
-		flex-direction: column; /* Stack columns vertically on small screens */
-		min-height: auto;
-		flex-wrap: wrap;
-
-	}
-	.title-container, .logocontainer, .container, .project-container, .wrapper  {
-        scroll-snap-align: none; /* Disable scroll snapping on mobile devices */
-		scroll-snap-type: none;
-
-    }
-	.title-container {
-		max-height: 80dvh;
-		max-height: 80vh;
-	}
-	.project-container {
-		height: auto; /* Adjust padding for smaller screens */
-	}
-
-    /* Pseudo-element for background image with opacity */
-
-
-
-	 .logocontainer {
-        flex: 1 1 100%; /* Make each element take full width on smaller screens */
-        max-width: 100%; /* Ensure elements do not overflow */
-        padding-right: 0; /* Remove padding to prevent overflow */
-        text-align: center; /* Center text on smaller screens */
-    }
-	.container {
-		display: flex; /* Use Flexbox to arrange items in a row */
-		flex-wrap: wrap; /* Allow items to wrap to a new line if needed */
-		align-items: flex-start; /* Align items to the start (top) */
-		justify-content: center; /* Distribute space between items */
-		gap:0 ; /* Add a gap between elements */
-		padding: 20px; /* Add padding around the container */
-		background-color: white; /* Background color for the container */
-		width: 100%; /* Full width of the container */
-		box-sizing: border-box; /* Include padding and border in element's total width */
-		height: auto;
-		min-height: auto;
-		border: none; /* Optional border for the container */
-
-	}
-	.logos
-	{display: none;}
-	h2 {
-		font-size: 2rem; /* Adjust font size for smaller screens */
-	}
-	.tabs-banner{
-		border-bottom: 0px solid #ddd; /* Optional bottom border for a banner effect */
-		height: auto;
-		border: none
-
-	}
-	.content {
-		height: auto;
-		border: none;
-	}
-	.logocontainer {
-		height: auto;
-	    min-height: auto;
-		display: flex;
-
-	}
-	.project img:hover {
-		transform: scale(1.05); /* Slightly enlarge icons on hover */
-		cursor: pointer; /* Change cursor to pointer to indicate interactivity */
-		filter: grayscale(0%); /* Remove grayscale on hover */
-	}
-
-
+.icon-circle-outline {
+    display: inline-block;          /* Ensure the element stays inline but behaves like a block for padding */
+    width: 40px;                    /* Width of the circle */
+    height: 40px;                   /* Height of the circle */
+    line-height: 40px;              /* Aligns the icon vertically in the middle */
+    text-align: center;             /* Aligns the icon horizontally in the middle */
+    border-radius: 50%;             /* Creates a circle */
+    border: 2px solid lightgrey;    /* Light grey border */
+    color: black;                   /* Icon color */
+    font-size: 1rem;                /* Icon size */
+    margin: 5px;                    /* Adds spacing around each icon */
+    transition: border-color 0.3s;  /* Smooth transition for hover effect */
 }
 
-/* Title Container */
+.icon-circle-outline:hover {
+    border-color: grey;             /* Darker grey on hover */
+}
 
 /* Scroll Indicator Styles */
 .scroll-indicator {
@@ -1495,4 +1476,124 @@ body {
     80% {
         transform: translateY(5px) rotate(45deg); /* Move up slightly */
     }
+}
+
+@media screen and (max-width: 812px) {
+	.project-items {
+        flex-direction: column; /* Stack items vertically on small screens */
+        gap: 15px; /* Reduce gap between project items */
+
+    }
+	.tab-years {
+        font-size: 0.5rem; /* Smaller font size for mobile devices */
+    }
+
+    .project {
+        width: 100%; /* Full width for each project on small screens */
+        height: auto; /* Let the height adjust automatically */
+        margin-bottom: 20px; /* Optional: spacing between stacked items */
+        padding: 10px; /* Reduced padding to minimize extra space */
+		background-color: white;
+		border: 1px solid #ddd; /* Ensure border is visible on mobile */
+    }
+
+    .project-logo {
+        margin-bottom: 5px; /* Further reduced space below the logo */
+    }
+
+    .project-content {
+        padding: 0; /* Remove padding to minimize extra space */
+        margin-top: 5px; /* Minimal margin to separate the content from the image */
+    }
+	 .logocontainer .container {
+		flex-direction: column; /* Stack columns vertically on small screens */
+		min-height: auto;
+		flex-wrap: wrap;
+
+	}
+	.title-container, .logocontainer, .container, .project-container, .wrapper  {
+        scroll-snap-align: none; /* Disable scroll snapping on mobile devices */
+		scroll-snap-type: none;
+
+    }
+	.title-container {
+		max-height: 80dvh;
+		max-height: 80vh;
+	}
+	.project-container {
+		height: auto; /* Adjust padding for smaller screens */
+	}
+
+
+	 .logocontainer {
+        flex: 1 1 100%; /* Make each element take full width on smaller screens */
+        max-width: 100%; /* Ensure elements do not overflow */
+        padding-right: 0; /* Remove padding to prevent overflow */
+        text-align: center; /* Center text on smaller screens */
+    }
+	.container {
+		display: flex; /* Use Flexbox to arrange items in a row */
+		flex-wrap: wrap; /* Allow items to wrap to a new line if needed */
+		align-items: flex-start; /* Align items to the start (top) */
+		justify-content: center; /* Distribute space between items */
+		gap:0 ; /* Add a gap between elements */
+		padding: 20px; /* Add padding around the container */
+		width: 100%; /* Full width of the container */
+		box-sizing: border-box; /* Include padding and border in element's total width */
+				height: auto;
+		min-height: auto;
+		border: none; /* Optional border for the container */
+
+	}
+	.flex-container {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center items horizontally */
+    }
+.tab-years {
+        font-size: 0.7rem; /* Smaller font size for mobile devices */
+    }
+    .left-item, .right-item {
+        flex: 1 1 100%; /* Take full width of the container */
+        max-width: 100%; /* Ensure elements do not exceed container width */
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+	.logos
+	{display: none;}
+	h2 {
+		font-size: 2rem; /* Adjust font size for smaller screens */
+	}
+	.tabs-banner{
+
+		height: auto;
+
+
+	}
+	.content {
+		height: auto;
+		border: none;
+	}
+
+	.logocontainer {
+		height: auto;
+	    min-height: auto;
+		display: flex;
+
+	}
+	.project img:hover {
+		transform: scale(1.05); /* Slightly enlarge icons on hover */
+		cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+		filter: grayscale(0%); /* Remove grayscale on hover */
+	}
+	.container {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center items horizontally */
+
+	}
+	.container.last {
+		min-height: auto;
+
+	}
+
+
+
 }
