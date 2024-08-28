@@ -1109,9 +1109,6 @@ body {
 	border: 1px solid #ddd; /* Optional border for each project */
 	border-radius: 5px; /* Optional rounded corners */
 	box-sizing: border-box; /* Includes padding in the total width/height */
-	border: 1px solid #ddd; /* Optional border for each project */
-	border-radius: 5px; /* Optional rounded corners */
-	background-color: white; /* Optional background color for each project */
 	display: none; /* Hide all content by default */
 	text-align: left; /* Align text to the left for readability */
 }
@@ -1147,7 +1144,7 @@ body {
 }
 
 .image-box {
-    width: 100%; /* Full width of the parent */
+    max-width: 60%; /* Full width of the parent */
     aspect-ratio: 1 / 1; /* Ensure a square container */
     position: relative; /* Position relative to hold absolutely positioned children */
     display: flex;
@@ -1283,6 +1280,7 @@ body {
     align-items: center; /* Center items horizontally */
     gap: 20px; /* Add gap between items */
     box-sizing: border-box; /* Include padding and border in width calculation */
+	min-height: 100vh;
 }
 
 /* Flex container for left and right items */
@@ -1593,7 +1591,9 @@ body {
 		min-height: auto;
 
 	}
-
-
+	.tab-content {
+		padding: 10px; /* Adjust padding for smaller screens */
+		margin: 10px;
+	}
 
 }
