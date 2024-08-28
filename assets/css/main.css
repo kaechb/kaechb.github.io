@@ -961,6 +961,7 @@ input, select, textarea {
 scroll-snap-type: y mandatory;
 overflow-y: scroll;
 height: 100vh; /* Adjust based on your design needs */
+height: 100dvh;
 }
 
 html {
@@ -1037,6 +1038,7 @@ body {
 	padding: 0rem;
 	scroll-snap-align: start;
 	min-height: 100vh;
+	min-height: 100dvh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1083,6 +1085,7 @@ body {
     margin-bottom: 2rem; /* Adds some space below the banner */
     width: 100%; /* Ensures the banner spans the full width */
 	height: 80vh;
+	height: 80dvh;
 	box-sizing: border-box; /* Includes padding in the total width/height */
     background-color: white; /* Optional background color for each project */
     border: 1px solid #ddd; /* Optional border for each project */
@@ -1149,6 +1152,7 @@ body {
     box-sizing: border-box; /* Ensures padding is included in the total width */
 	scroll-snap-align: start;
 	height: 100vh;
+	height: 100dvh;
 }
 
 
@@ -1175,7 +1179,9 @@ body {
     align-items: center; /* Centers logo and content horizontally */
     justify-content: center; /* Centers content vertically */
     text-align: center; /* Centers the text inside the content block */
-    height: 60vh; /* Fixed height for each project box */
+    height: 60dvh;
+	height: 60vh; /* Fixed height for each project box */
+
     padding: 20px; /* Optional padding around each project */
     box-sizing: border-box; /* Includes padding in the total width/height */
     background-color: white; /* Optional background color for each project */
@@ -1227,6 +1233,7 @@ body {
 	flex-direction: column;
 	display: flex;
 	max-height: 100vh;
+	max-height: 100dvh;
 	background-color: white; /* Optional background color for each project */
     border: 1px solid #ddd; /* Optional border for each project */
     border-radius: 5px; /* Optional rounded corners */
@@ -1240,12 +1247,15 @@ body {
 	flex-direction: column;
 	display: flex;
 	max-height: 100vh;
+	max-height: 100dvh;
+
 	max-width: 30%;
 
 }
 
 .profile-image {
     height: 100vh; /* Scale the image to fill the full height of the viewport */
+	height: 100dvh;
     width: auto; /* Maintain the aspect ratio */
     object-fit: cover; /* Ensure the image covers the container */
     opacity: 0.5; /* Set image opacity */
@@ -1302,6 +1312,7 @@ body {
     justify-content: space-between;
     padding: 20px;
     min-height: 100vh;
+	min-height: 100dvh;
     background-color: white; /* Optional background color */
     scroll-snap-align: start;
 	box-sizing: border-box;
@@ -1380,6 +1391,7 @@ body {
 
     }
 	.title-container {
+		max-height: 80dvh;
 		max-height: 80vh;
 	}
 	.project-container {
