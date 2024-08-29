@@ -1316,7 +1316,8 @@ body {
     box-sizing: border-box; /* Include padding and border in width calculation */
     display: flex; /* Enable flexbox for child elements */
     flex-direction: column; /* Stack content vertically inside the item */
-    align-items: flex-start; /* Align content to the top */
+    align-items:center; /* Align content to the top */
+	justify-content: center;
 }
 
 /* Styles for the third item */
