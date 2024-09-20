@@ -1,11 +1,7 @@
 @import url(fontawesome-all.min.css);
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i");
 
-/*
-	Story by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -136,7 +132,7 @@ input, select, textarea {
 
 		}
 
-		@media screen and (max-width: 360px) {
+		@media screen and (max-width: 360px) or (max-height: 750px) {
 
 			html {
 				font-size: 10pt;
@@ -144,10 +140,10 @@ input, select, textarea {
 
 		}
 
-	body {
-		background-color: #ffffff;
+		body {
+			background-color: #ffffff;
 		color: #000000;
-	}
+		}
 
 	body, input, select, textarea {
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -957,12 +953,7 @@ input, select, textarea {
 
 /* Wrapper */
 
-.wrapper {
-scroll-snap-type: y mandatory;
-overflow-y: scroll;
-height: 100vh; /* Adjust based on your design needs */
-height: 100dvh;
-}
+
 
 html {
 	box-sizing: border-box;
@@ -1082,10 +1073,9 @@ body {
     flex-wrap: wrap;
 	justify-content: center;
 	padding: 0rem; /* Adds some space around the banner content */
-    margin-bottom: 2rem; /* Adds some space below the banner */
+    margin-bottom: 1rem; /* Adds some space below the banner */
     width: 100%; /* Ensures the banner spans the full width */
-	height: 80vh;
-	height: 80dvh;
+
 	box-sizing: border-box; /* Includes padding in the total width/height */
     border-radius: 5px; /* Optional rounded corners */
 }
@@ -1102,7 +1092,7 @@ body {
 .tabs .tab-content {
 	display: none;
 	flex-grow: 1;
-	padding: 2rem;
+	padding: 1rem;
 	width: 100%;
 	align-self: flex-start;
 	background-color: white; /* Optional background color for each project */
@@ -1125,8 +1115,8 @@ body {
 .tab-content {
     display: none; /* Hide all content by default */
     text-align: left; /* Align text to the left for readability */
-    padding: 10px; /* Adds padding around the content */
-	margin: 50px;
+    padding: 2px; /* Adds padding around the content */
+	margin: 20px;
 
 
 }
@@ -1144,7 +1134,7 @@ body {
 }
 
 .image-box {
-    max-width: 60%; /* Full width of the parent */
+    max-width: 80%; /* Full width of the parent */
     aspect-ratio: 1 / 1; /* Ensure a square container */
     position: relative; /* Position relative to hold absolutely positioned children */
     display: flex;
@@ -1177,7 +1167,7 @@ body {
     width: 100%; /* Ensures the container spans the full width */
     padding: 20px; /* Optional padding for spacing within the container */
     box-sizing: border-box; /* Ensures padding is included in the total width */
-	scroll-snap-align: start;
+
 	height: auto;
 	height: auto;
 }
@@ -1272,7 +1262,7 @@ body {
 /* Main container */
 .container {
     padding: 0rem;
-    scroll-snap-align: start;
+
     display: flex;
     flex-direction: column; /* Default to column layout */
     justify-content: space-between; /* Space between items */
@@ -1355,7 +1345,7 @@ body {
 
 .container.last {
     padding: 0rem;
-    scroll-snap-align: start;
+
     min-height: 100vh;
     display: flex;
     flex-direction: column; /* Stack items vertically within the container */
@@ -1375,7 +1365,7 @@ body {
     min-height: 100vh;
 	min-height: 100dvh;
     background-color: white; /* Optional background color */
-    scroll-snap-align: start;
+
 	box-sizing: border-box;
 }
 
