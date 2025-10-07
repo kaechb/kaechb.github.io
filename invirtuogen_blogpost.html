@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>InVirtuoGen: Rethinking Molecular Generation - Benno Kaech</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .blog-post {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.8;
+        }
+        .blog-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .blog-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        .blog-content h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .blog-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            color: #555;
+        }
+        .code-block {
+            background: #f4f4f4;
+            border-left: 4px solid #0066cc;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .figure img {
+            max-width: 100%;
+            height: auto;
+        }
+        .figure-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .key-insight {
+            background: #e8f4fd;
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        .back-link {
+            margin-bottom: 2rem;
+        }
+        .back-link a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-post">
+        <div class="back-link">
+            <a href="index.html">← Back to Portfolio</a>
+        </div>
+
+        <article>
+            <div class="blog-header">
+                <h1>InVirtuoGen: Some Thoughts on Why Discrete Flows Actually Work for Molecules</h1>
+                <div class="blog-meta">
+                    <span>January 2025</span> • <span>Personal reflections on a year-long journey</span>
+                </div>
+            </div>
+
+            <div class="blog-content">
+                <p>
+                    Coming from physics, one of the most important insights I had was that the inductive biases of the architectures you use matter enormously. In physics, if you're modeling planetary orbits, you better have rotational symmetry built in. If you are working with particle clouds, your model should better be permutation invariant. The structure of your model should reflect the structure of your problem.
+                </p>
+
+                <p>
+                    So when I arrived at In Virtuo Labs and saw their frontier model was based on GPT-style next-token prediction for molecules, something felt fundamentally wrong. They were generating molecules left-to-right, like writing a sentence. But molecules aren't sentences. There's no "first" atom in a benzene ring. The model was learning chemistry despite the architecture, not because of it.
+                </p>
+
+                <h2>The Search for Better Inductive Biases</h2>
+
+                <p>
+                    Naturally, I started looking at what else was out there. The most promising thing I found was NVIDIA's GenMol - a masked discrete diffusion model. At least it wasn't pretending molecules had a left-to-right order. Instead, it would mask random tokens and gradually unmask them. Better, but still... once you unmask a position, you're committed. No take-backs. So now you are just predicting tokens in an aribtrary order.
+                </p>
+
+                <p>
+                    Here's the thing: GenMol had no open code at the time for my to investigate (even now, their checkpoints are not openly accessible to my best knowledge). So I started building my own version. But instead of using their masked diffusion framework, I implemented it using discrete flow matching, mostly because I had just read the Gat et al. paper and thought it was elegant.
+                </p>
+
+                <p>
+                    What started as "let me just recreate GenMol to understand it" turned into something unexpected.
+                </p>
+
+                <h2>The Accident That Changed Everything</h2>
+
+                <p>
+                    While testing my discrete flow implementation, I was playing with different step sizes. With masked diffusion models like GenMol, using more steps helps, but there is a hard limit: you cannot have more steps than you have tokens to unmask, unless you rely on some remasking heuristics, that did not seem to work well.
+                </p>
+
+                <p>
+                    But here's what I discovered by accident: with standard discrete flow sampling, changing the step size did... nothing. Whether I used 10 steps or 100 steps, the model made the same total number of token changes. Look at this:
+                </p>
+
+                <div class="figure">
+                    <img src="images/cumulative_changes_bar.png" alt="Plot showing token changes remaining constant across step sizes ( 0.01, 0.001). The bars overlap for standard sampling, illustrating invariance of total token edits per molecule." />
+                    <div class="figure-caption">
+                        Empirical observation that broke my brain: despite changing the step size by 100x, the total number of token edits per molecule stayed constant (~50). The plot shows the cumulative number of token edits vs step size across runs, demonstrating near-perfect invariance.
+                    </div>
+                </div>
+
+                <p>
+                    This made little intuitive sense. If you take smaller steps, you should make more changes overall. But the model learned to compensate: smaller steps changed fewer tokens per step, keeping the total constant. It looked like the model was saying "I need exactly 50 edits to make this molecule, no more, no less."
+                </p>
+
+                <p>
+                    This was depressing. If finer granularity doesn't help, then discrete flows have no advantage over masked diffusion. I almost gave up here.
+                </p>
+
+                <h2>The Sampling Hack That Saved Everything</h2>
+
+                <p>
+                    Out of frustration (and honestly, a bit of desperation), I tried something theoretically wrong. Instead of using the proper discrete flow update equation:
+                </p>
+
+                <div class="code-block">
+                    <pre>
+# Correct (but apparently useless) way:
+X_{t+h} ~ X_t + h * velocity_field(X_t)
+
+# What I tried in desperation:
+X_{t+h} ~ sample_from_model_distribution(X_t)
+                    </pre>
+                </div>
+
+                <p>
+                    Basically, instead of taking small steps according to the velocity field, I just sampled fresh from the model's predicted distribution at each timestep. This shouldn't work better. It throws away the careful mathematical framework of flow matching.
+                </p>
+
+                <p>
+                    But it did work better. Dramatically better. And suddenly, granularity mattered:
+                </p>
+
+                <div class="figure">
+                    <embed src="images/quality_vs_diversity_dt_scan.png"  width="100%" height="500px" />
+                    <div class="figure-caption">
+                        Comparison of sampling granularity: as the step size decreases (0.1 → 0.001), the number of token changes and final molecule quality both increase, illustrating that more refinement steps yield higher quality molecules.
+                    </div>
+                </div>
+
+                <p>
+                    The dynamics completely changed. Instead of the model conserving its "edit budget," it now started with many simultaneous changes that gradually decreased as the molecule converged. It looked like actual refinement - messy at first, then progressively cleaner.
+                </p>
+
+                <h2>Why This Actually Makes Sense (In Hindsight)</h2>
+
+                <p>
+                    The standard discrete flow sampler tries to follow a continuous path through a discrete space. It is like trying to draw a smooth curve on a checkerboard. Our sampler embraces discreteness and repeatedly jumps to locally stable states, still guided by the flow.
+                </p>
+
+                <h2>RL For Oracle Optimization: why GA plus PPO for flows</h2>
+
+                <p>
+                    Established RL approaches in this area assume an autoregressive factorization: you can write down log p(x) as a sum of next token log probabilities and plug that into REINFORCE or PPO. That does not hold for discrete flows. There is no tractable log p(x) for the full sequence, and the policy acts on all positions at once, not left to right.
+                </p>
+
+                <p>
+                    To make RL work, I adapted PPO to the flow setting by optimizing a time weighted objective on partially noised states. For each sequence, I sample timesteps t, construct a noised state x_t by interpolating between uniform tokens and the current sample, and maximize \(\sum_{i \in \text{noised}} A\, \log \pi_\theta(x^i_1 \mid x_t, t)\) with a clipped surrogate. Advantage comes from standardized oracle scores. In short: we backprop through the model's per position predictions under a flow matching view, not through a next token chain.
+                </p>
+
+                <p>
+                    RL alone is not enough when oracle calls are scarce. I fuse a simple genetic algorithm that breeds high scoring molecules to create strong starting states x_{t=0}. Crossover is done in fragmented SMILES space by swapping fragment blocks, then the flow refines the offspring. A small mutation budget on the best molecules maintains local exploration. An adaptive bandit biases sequence lengths that repeatedly yield high rewards while retaining exploration.
+                </p>
+
+                <div class="callout">
+                    <strong>Why this fusion matters:</strong>
+                    <ul>
+                        <li>GA gives sample efficient jumps across chemotypes.</li>
+                        <li>Flow plus PPO gives gradient guided refinement under shaped rewards.</li>
+                        <li>The uniform source makes GA outputs valid starting points without masking tricks.</li>
+                    </ul>
+                </div>
+
+                <h2>Fragment Chemistry: The Part That Actually Makes Sense</h2>
+
+                <p>
+                    Using fragmented SMILES is not only a minor detail. It is crucial for practical applications. Real medicinal chemists don't think in terms of individual atoms - they think about scaffolds, functional groups, building blocks. By fragmenting molecules using BRICS (Breaking of Retrosynthetically Interesting Chemical Substructures), we're speaking their language.
+                </p>
+
+                <p>
+                                 </p>
+
+
+
+                <h2>The PMO Benchmark Drama</h2>
+
+                <p>
+                    Beating GenMol on the PMO benchmark felt good, I won't lie. But here's the thing - these benchmarks are weird. The "deco hop" task asks you to maximize the similarity to a specific molecule while decorating it. The "median molecules" tasks are essentially asking for mediocrity.
+                </p>
+
+                <p>
+                    What actually matters is that the model can be directed toward specific objectives while maintaining chemical validity. The fact that we can do this with a single set of hyperparameters (while GenMol needs task-specific tuning) suggests we're doing something right. Or we got lucky. Probably both.
+                </p>
+
+                <h2>Actual Limitations (Not Marketing Speak)</h2>
+
+                <p>
+                    Let's be honest about what InVirtuoGen can't do:
+                </p>
+                <ul>
+                    <li>No stereochemistry - we completely ignore it, which is terrible for drug discovery</li>
+                    <li>The SA score we optimize for is a rough heuristic that often disagrees with actual chemists</li>
+                    <li>Our "drug-likeness" metrics are from 2012 - the field has moved on</li>
+                    <li>For fragment-constrained generation, we basically turn back into a masked model, negating our main advantage</li>
+                    <li>The model has no concept of 3D structure or protein binding - it's purely 2D</li>
+                </ul>
+
+                <h2>Why I Think This Matters (Beyond Papers)</h2>
+
+                <p>
+                    The real test will be whether actual drug discovery teams find this useful. I've shown it to a few medicinal chemists, and the reactions have been... mixed. Some love the fragment control. Others point out (correctly) that generating molecules is the easy part - synthesizing and testing them is where the real work happens.
+                </p>
+
+                <p>
+                    But I think there's something deeper here. By treating generation as refinement rather than completion, we're acknowledging that molecules exist in a continuous space of possibilities. There's no "correct" order to build them in. This feels more aligned with chemical reality, even if I can't prove it mathematically.
+                </p>
+
+                <h2>Code and Reproducibility</h2>
+
+                <p>
+                    Everything's on GitHub. Fair warning - the code is research code. It works, it's documented, but it's not beautiful. I prioritized reproducibility over elegance. Every weird hack and magic number is there because removing it made things worse.
+                </p>
+
+                <p>
+                    If you're trying to reproduce the results, use the Docker container. I learned the hard way that "works on my machine" isn't good enough when your machine has seventeen different PyTorch versions installed.
+                </p>
+
+                <h2>What I'd Do Differently</h2>
+
+                <p>
+                    If I started over tomorrow, I'd:
+                </p>
+                <ul>
+                    <li>Don't follow the classic pitfalls of machine learning research: you are so close to beating the state-of-the-art, the only thing you need is to change hyperparameters slightly, or so you think.</li>
+                    <li>Test on actual medicinal chemistry problems earlier - benchmarks lie</li>
+                    <li>Accept the weird sampling hack sooner instead of fighting it for two months</li>
+                    <li>Write better documentation as I go (narrator: he won't)</li>
+                </ul>
+
+                <h2>The Honest Take</h2>
+
+                <p>
+                    InVirtuoGen works. It generates good molecules. It beats benchmarks. But I'm under no illusion that it's going to revolutionize drug discovery tomorrow. It's a step forward in a specific technical direction that I believe is more aligned with chemical reality.
+                </p>
+
+                <p>
+                    The real validation will come when we use it to design a molecule that actually helps someone. Until then, it's just equations and benchmarks. Important ones, I think, but still just numbers on a page.
+                </p>
+
+                <p>
+                    What keeps me excited is that feeling when the model generates something unexpected but chemically beautiful - a ring system I hadn't seen before, or a clever way to connect two fragments. It reminds me that we're not just optimizing metrics; we're exploring a space of possibilities that might, eventually, lead to medicines.
+                </p>
+
+                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd;">
+                    <p style="font-style: italic;">
+                        This is my first real project in drug discovery after transitioning from physics. I'm still learning, still making mistakes, and definitely still discovering how much I don't know. If you're working on similar problems or see flaws in my approach, I'd genuinely love to hear from you. Science is better when we admit what we don't know.
+                    </p>
+                    <p style="font-style: italic; margin-top: 1rem;">
+                        Find me at <a href="mailto:benno.kaech@icloud.com">benno.kaech@icloud.com</a> or the inevitable conference poster session where I'm explaining why our sampling hack works.
+                    </p>
+                </div>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
