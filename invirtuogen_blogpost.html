@@ -108,24 +108,25 @@
                     What started as "let me just recreate GenMol to understand it" turned into something unexpected.
                 </p>
 
-                <h2>The Accident That Changed Everything</h2>
+                <h2>My First Insight: Step Size Invariance</h2>
 
                 <p>
-                    While testing my discrete flow implementation, I was playing with different step sizes. With masked diffusion models like GenMol, using more steps helps, but there is a hard limit: you cannot have more steps than you have tokens to unmask, unless you rely on some remasking heuristics, that did not seem to work well.
+                    So one thing I realized quickls was that with masked diffusion models like GenMol, using more steps helps, but there is a hard limit: you cannot have more steps than you have tokens to unmask, unless you rely on some remasking heuristics, that did not seem to work well. So naturally I thought, that this was the time for my uniform source to shine. So I tested the performance of my discrete flow implementation as a function of the step size.
                 </p>
 
                 <p>
-                    But here's what I discovered by accident: with standard discrete flow sampling, changing the step size did... nothing. Whether I used 10 steps or 100 steps, the model made the same total number of token changes. Look at this:
+                    But what I discovered was depressing, with standard discrete flow sampling, changing the step size did... nothing. Whether I used 10 steps or 100 steps, the model made the same total number of token changes. Look at this:
                 </p>
 
                 <div class="figure">
-                    <img src="images/cumulative_changes_bar.png" alt="Plot showing token changes remaining constant across step sizes ( 0.01, 0.001). The bars overlap for standard sampling, illustrating invariance of total token edits per molecule." />
+                    <img src="images/quality_vs_diversity_dt_scan_eta_1.png" alt="Performance plot as a function of the step size (0.1 0.01, 0.001). The perfomance saturates as soon as you sample more often than the expected sequence length." />
                     <div class="figure-caption">
-                        Empirical observation that broke my brain: despite changing the step size by 100x, the total number of token edits per molecule stayed constant (~50). The plot shows the cumulative number of token edits vs step size across runs, demonstrating near-perfect invariance.
+                        Depressing observation: despite changing the step size by 100x, the performance stayed constant.
                     </div>
                 </div>
 
                 <p>
+                    But then I had the idea to check how often the model actually changes a token. And what I saw was even more concerning: Whether you sample with granularity 0.01 or 0.001, the model changes the same number of tokens on average.
                     This made little intuitive sense. If you take smaller steps, you should make more changes overall. But the model learned to compensate: smaller steps changed fewer tokens per step, keeping the total constant. It looked like the model was saying "I need exactly 50 edits to make this molecule, no more, no less."
                 </p>
 
@@ -167,7 +168,12 @@ X_{t+h} ~ sample_from_model_distribution(X_t)
                 <p>
                     The dynamics completely changed. Instead of the model conserving its "edit budget," it now started with many simultaneous changes that gradually decreased as the molecule converged. It looked like actual refinement - messy at first, then progressively cleaner.
                 </p>
-
+                <div class="figure">
+                    <img src="images/cumulative_changes_bar.png" alt="Plot showing token changes remaining constant across step sizes ( 0.01, 0.001). The bars overlap for standard sampling, illustrating invariance of total token edits per molecule." />
+                    <div class="figure-caption">
+                        Empirical observation that broke my brain: despite changing the step size by 100x, the total number of token edits per molecule stayed constant (~50). The plot shows the cumulative number of token edits vs step size across runs, demonstrating near-perfect invariance.
+                    </div>
+                </div>
                 <h2>Why This Actually Makes Sense (In Hindsight)</h2>
 
                 <p>
