@@ -71,6 +71,9 @@
         }
     </style>
 </head>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 <body>
     <div class="blog-post">
         <div class="back-link">
@@ -140,15 +143,13 @@
                     Out of frustration (and honestly, a bit of desperation), I tried something theoretically wrong. Instead of using the proper discrete flow update equation:
                 </p>
 
-                <div class="code-block">
-                    <pre>
-# Correct (but apparently useless) way:
-X_{t+h} ~ X_t + h * velocity_field(X_t)
+                <div class="white-card" style="padding:1rem;">
+                    <p><strong>Correct (but apparently useless) way:</strong></p>
+                    $$ X_{t+h} \sim X_t + h\, v_\theta(X_t) $$
 
-# What I tried in desperation:
-X_{t+h} ~ sample_from_model_distribution(X_t)
-                    </pre>
-                </div>
+                    <p><strong>What I tried in desperation:</strong></p>
+                    $$ X_{t+h} \sim p_{1|T}(X_t) $$
+                  </div>
 
                 <p>
                     Basically, instead of taking small steps according to the velocity field, I just sampled fresh from the model's predicted distribution at each timestep. This shouldn't work better. It throws away the careful mathematical framework of flow matching.
