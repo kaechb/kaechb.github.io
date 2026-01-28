@@ -1406,7 +1406,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url('/images/20250722_InVirtuoLabs0024.JPG'); /* Set the background image */
+	background-image: url('../../images/20250722_InVirtuoLabs0024.jpg'); /* Set the background image */
 	background-size: 100% auto;
 	background-position: calc(50% - 50%) center; /* Move the background image slightly to the left */
 	background-repeat: no-repeat; /* Prevent background image repetition */
