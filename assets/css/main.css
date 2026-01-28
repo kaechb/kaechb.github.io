@@ -1407,8 +1407,9 @@ body {
 	width: 100%;
 	height: 100%;
 	background-image: url('../../images/20250722_InVirtuoLabs0024.jpg'); /* Set the background image */
-	background-size: 100% auto;
-	background-position: calc(50% - 50%) center; /* Move the background image slightly to the left */
+	background-color: rgb(222 222 222);
+	background-size: auto 100%;
+	background-position: right center;
 	background-repeat: no-repeat; /* Prevent background image repetition */
 	opacity: 0.5; /* Set the desired opacity for the background image */
 	z-index: 1; /* Place it behind the content */
@@ -1520,6 +1521,24 @@ body {
 	.title-container {
 		max-height: 80dvh;
 		max-height: 80vh;
+		align-items: flex-start; /* Align content to top on small screens */
+		padding-top: 10vh;
+	}
+	.title-content {
+		transform: translateY(-12vh); /* Move text up on small screens */
+	}
+	.title-content .icons {
+		order: -1; /* Move social icons above title on mobile */
+		margin-bottom: 12px;
+	}
+	.title-content h1,
+	.title-content p {
+		order: 0;
+	}
+	.title-container::before {
+		opacity: 0.35; /* Reduce image dominance on small screens */
+		background-size: auto 75%;
+		background-position: right bottom; /* Anchor image to bottom on small screens */
 	}
 	.project-container {
 		height: auto; /* Adjust padding for smaller screens */
